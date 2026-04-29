@@ -1,5 +1,5 @@
 export type CityDataAPIResponse = {
-  reslts: CityData[];
+  results: CityData[];
 };
 
 export type CityData = {
