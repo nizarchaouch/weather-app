@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import Header from "./components/Header"
 import type { WeatherDataAPIResponse } from "./types/weatherData";
+import SearchCity from "./components/SezrchCity";
 // import type { CityDataAPIResponse } from "./types/CityData";
 
 
@@ -19,6 +20,7 @@ function App() {
   return (
     <div className="px-6 py-8">
       <Header />
+      <SearchCity />
     </div>
   )
 }
