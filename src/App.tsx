@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Header from "./components/Header"
 import SearchCity from "./components/SearchCity";
 import type { CityData } from "./types/CityData";
@@ -13,6 +13,20 @@ function App() {
     setCities((prev) => [...prev, city]);
   }
 
+  //Touch the updatedAT for each city to trigger fresh data in the weather card
+  const touchCities = () => {
+    let citiesCopy = [...cities];
+    citiesCopy = citiesCopy.map(city => ({ ...city, updatedAt: new Date() }));
+    setCities(citiesCopy);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      touchCities();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [cities])
+
 
   return (
     <div className="px-6 py-8">
@@ -20,8 +34,8 @@ function App() {
       <SearchCity handleAddCity={handelAddCity} />
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {cities.map((city) => (
-          <div key={city.id}>
-            <WeatherCard city={city} />
+          <div>
+            <WeatherCard key={city.id} city={city} />
           </div>
         ))}
       </div>

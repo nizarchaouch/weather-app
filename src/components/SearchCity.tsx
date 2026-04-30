@@ -14,7 +14,7 @@ export default function SearchCity({ handleAddCity }: Props) {
     };
 
     const handleAddCityClick=(city: CityData)=>{
-        handleAddCity(city);
+        handleAddCity({...city, updatedAt: new Date()});
         setResults([]);
         setQuery("");
     }

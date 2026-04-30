@@ -7,14 +7,11 @@ import { weatherCodeIcon } from "../utlis/getWeatherCodeIcon";
 export default function WeatherCard({ city }: { city: CityData }) {
     const [weather, setWeather] = useState<WeatherDataAPIResponse | null>(null);
 
-    
-
-
     const fetchWeather = async () => {
         try {
             const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&current_weather=true`);
-            const data = await response.json();
-            console.log("fetch weather data", data);
+            const data : WeatherDataAPIResponse = await response.json();
+            console.log("fetch weather data", city.name, data);
             setWeather(data);
         } catch (error) {
             console.error("Error fetching weather data:", error);
@@ -23,7 +20,7 @@ export default function WeatherCard({ city }: { city: CityData }) {
 
     useEffect(() => {
         fetchWeather();
-    }, [city])
+    }, [city]);
 
     return (
         <div className="border border-gray-300 rounded-md p-4 mt-4">
@@ -34,6 +31,7 @@ export default function WeatherCard({ city }: { city: CityData }) {
             </div>
             <div>
                 <p className="text-sm">Wind: {weather ? Math.round(weather.current_weather.windspeed) : "N/A"} {weather?.current_weather_units.windspeed}</p>
+                <p className="text-xs text-gray-500">Updated At: {city.updatedAt.toLocaleString()}</p>
             </div>
         </div>
     )
