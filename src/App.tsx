@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Header from "./components/Header"
-import type { WeatherDataAPIResponse } from "./types/weatherData";
 import SearchCity from "./components/SearchCity";
 import type { CityData } from "./types/CityData";
 import WeatherCard from "./components/WeatherCard";
