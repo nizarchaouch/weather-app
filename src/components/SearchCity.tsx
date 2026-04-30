@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CityData, CityDataAPIResponse } from "../types/CityData";
 
 type Props = {
@@ -6,8 +6,8 @@ type Props = {
 }
 
 export default function SearchCity({ handleAddCity }: Props) {
-    const [query, setQuery] = useState("");
     const [results, setResults] = useState<CityData[]>([]);
+    const [query, setQuery] = useState("");
 
     const handelSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
@@ -16,6 +16,7 @@ export default function SearchCity({ handleAddCity }: Props) {
     const handleAddCityClick=(city: CityData)=>{
         handleAddCity(city);
         setResults([]);
+        setQuery("");
     }
 
     // Debounce the API call to avoid making a request on every keystroke
