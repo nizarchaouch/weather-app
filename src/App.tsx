@@ -13,6 +13,10 @@ function App() {
     setCities((prev) => [...prev, city]);
   }
 
+  const handelDeltCity = (id: number) => {
+    setCities((prev) => prev.filter(city => city.id !== id));
+  }
+
   //Touch the updatedAT for each city to trigger fresh data in the weather card
   const touchCities = () => {
     let citiesCopy = [...cities];
@@ -35,7 +39,7 @@ function App() {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {cities.map((city) => (
           <div>
-            <WeatherCard key={city.id} city={city} />
+            <WeatherCard key={city.id} city={city} handelDeltCity={handelDeltCity} />
           </div>
         ))}
       </div>

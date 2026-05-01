@@ -4,13 +4,18 @@ import type { CityData } from "../types/CityData";
 import { getWeatherCodeDesc } from "../utlis/getWeatherCodeDesc";
 import { weatherCodeIcon } from "../utlis/getWeatherCodeIcon";
 
-export default function WeatherCard({ city }: { city: CityData }) {
+type Props = {
+    city: CityData;
+    handelDeltCity: (id: number) => void;
+}
+
+export default function WeatherCard({ city, handelDeltCity }: Props) {
     const [weather, setWeather] = useState<WeatherDataAPIResponse | null>(null);
 
     const fetchWeather = async () => {
         try {
             const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&current_weather=true`);
-            const data : WeatherDataAPIResponse = await response.json();
+            const data: WeatherDataAPIResponse = await response.json();
             console.log("fetch weather data", city.name, data);
             setWeather(data);
         } catch (error) {
@@ -24,7 +29,10 @@ export default function WeatherCard({ city }: { city: CityData }) {
 
     return (
         <div className="border border-gray-300 rounded-md p-4 mt-4">
-            <h1>{city.name}, {city.country}</h1>
+            <div className="flex items-center justify-between">
+                <h1>{city.name}, {city.country}</h1>
+                <div onClick={() => handelDeltCity(city.id)} className="cursor-pointer hover:bg-gray-200 ro unded">🗑️</div>
+            </div>
             <div className="flex items-center gap-4 mt-2 justify-between">
                 <p className="text-3xl font-bold">{weather ? Math.round(weather.current_weather.temperature) : "N/A"}{weather?.current_weather_units.temperature}</p>
                 <p className="text-sm gap-5">{weather ? weatherCodeIcon[weather.current_weather.weathercode] ?? "Unknown" : "N/A"}{weather ? getWeatherCodeDesc[weather.current_weather.weathercode] ?? "Unknown" : "N/A"}</p>
