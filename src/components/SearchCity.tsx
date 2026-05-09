@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { CityData, CityDataAPIResponse } from "../types/CityData";
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 
 type Props = {
     handleAddCity: (city: CityData) => void;
@@ -68,10 +68,16 @@ export default function SearchCity({ handleAddCity }: Props) {
                 />
             </div>
 
-            {results.length > 0 && <div className="flex flex-col gap-2 border border-gray-300 rounded-md mt-2 p-4">
+            {results.length > 0 && <div className="mt-1 w-full max-w-md rounded-xl border border-gray-700 bg-[linear-gradient(135deg,_hsl(220_40%_14%_/_0.6)_0%,_hsl(220_40%_10%_/_0.4)_100%)]">
                 {results.map((result) => (
-                    <div className="hover:bg-gray-100 cursor-pointer p-1" key={result.id} onClick={() => handleAddCityClick(result)}>
-                        {result.name}, {result.country}
+                    <div className="flex items-center justify-between hover:bg-gray-700 text-white cursor-pointer py-2 px-4" key={result.id} onClick={() => handleAddCityClick(result)}>
+                        <div className="text-white" >
+                            <p className="font-bold">{result.name}</p>
+                            <p className="text-sm text-gray-400">{result.admin1}, {result.country}</p>
+                        </div>
+                        <div>
+                            <Plus className="text-sky-400 w-5 h-5" />
+                        </div>
                     </div>
                 ))}
             </div>}
