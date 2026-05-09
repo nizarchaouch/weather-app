@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { CityData, CityDataAPIResponse } from "../types/CityData";
+import { Search } from "lucide-react";
 
 type Props = {
     handleAddCity: (city: CityData) => void;
@@ -13,8 +14,8 @@ export default function SearchCity({ handleAddCity }: Props) {
         setQuery(e.target.value);
     };
 
-    const handleAddCityClick=(city: CityData)=>{
-        handleAddCity({...city, updatedAt: new Date()});
+    const handleAddCityClick = (city: CityData) => {
+        handleAddCity({ ...city, updatedAt: new Date() });
         setResults([]);
         setQuery("");
     }
@@ -55,14 +56,17 @@ export default function SearchCity({ handleAddCity }: Props) {
 
 
     return (
-        <div>
-            <input
-                value={query}
-                onChange={handelSearch}
-                type="text"
-                placeholder="Search city"
-                className="border border-gray-300 rounded-md px-4 py-2 mt-3 w-full"
-            />
+        <div className="flex flex-col items-center mb-8">
+            <div className="relative w-full max-w-md">
+                <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                    value={query}
+                    onChange={handelSearch}
+                    type="text"
+                    placeholder="Add a city..."
+                    className="h-12 w-full rounded-full border border-gray-700 bg-[linear-gradient(135deg,_hsl(220_40%_14%_/_0.6)_0%,_hsl(220_40%_10%_/_0.4)_100%)] pl-10 pr-4 text-lg text-white/80 shadow-xl placeholder:text-white/50 focus:border-sky-400 focus:outline-none"
+                />
+            </div>
 
             {results.length > 0 && <div className="flex flex-col gap-2 border border-gray-300 rounded-md mt-2 p-4">
                 {results.map((result) => (
