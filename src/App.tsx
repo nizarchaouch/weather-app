@@ -3,6 +3,7 @@ import Header from "./components/Header"
 import SearchCity from "./components/SearchCity";
 import type { CityData } from "./types/CityData";
 import WeatherCard from "./components/WeatherCard";
+import "./index.css";
 // import type { CityDataAPIResponse } from "./types/CityData";
 
 
