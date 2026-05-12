@@ -20,12 +20,12 @@ function App() {
   }
 
   //Touch the updatedAT for each city to trigger fresh data in the weather card
-   const touchCities = () => {
+  /*  const touchCities = () => {
      let citiesCopy = [...cities];
      citiesCopy = citiesCopy.map(city => ({ ...city, updatedAt: new Date() }));
      setCities(citiesCopy);
    };
-
+ */
   useEffect(() => {
     const interval = setInterval(() => {
       setRefreshIn((prev) => {
