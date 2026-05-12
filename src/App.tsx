@@ -8,6 +8,7 @@ import "./index.css";
 
 
 function App() {
+  const [refreshIn, setRefreshIn] = useState<number>(15);
   const [cities, setCities] = useState<CityData[]>([]);
 
   const handelAddCity = (city: CityData) => {
@@ -19,28 +20,40 @@ function App() {
   }
 
   //Touch the updatedAT for each city to trigger fresh data in the weather card
-  const touchCities = () => {
-    let citiesCopy = [...cities];
-    citiesCopy = citiesCopy.map(city => ({ ...city, updatedAt: new Date() }));
-    setCities(citiesCopy);
-  };
+  /*  const touchCities = () => {
+     let citiesCopy = [...cities];
+     citiesCopy = citiesCopy.map(city => ({ ...city, updatedAt: new Date() }));
+     setCities(citiesCopy);
+   }; */
 
   useEffect(() => {
     const interval = setInterval(() => {
-      touchCities();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [cities])
+      setRefreshIn((prev) => {
+        if (prev <= 1) {
+          setCities((prevCities) =>
+            prevCities.map((city) => ({
+              ...city,
+              updatedAt: new Date(),
+            }))
+          );
 
+          return 15;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="px-6 py-8">
-      <Header />
-      <SearchCity handleAddCity={handelAddCity} />
+      <Header refreshIn={refreshIn} />
+      <SearchCity handleAddCity={handelAddCity} cities={cities} />
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {cities.map((city) => (
-          <div>
-            <WeatherCard key={city.id} city={city} handelDeltCity={handelDeltCity} />
+          <div key={city.id}>
+            <WeatherCard city={city} handelDeltCity={handelDeltCity} />
           </div>
         ))}
       </div>
