@@ -4,9 +4,10 @@ import { Plus, Search } from "lucide-react";
 
 type Props = {
     handleAddCity: (city: CityData) => void;
+    cities: CityData[];
 }
 
-export default function SearchCity({ handleAddCity }: Props) {
+export default function SearchCity({ handleAddCity, cities }: Props) {
     const [results, setResults] = useState<CityData[]>([]);
     const [query, setQuery] = useState("");
     const [isFocused, setIsFocused] = useState(false);
@@ -78,20 +79,24 @@ export default function SearchCity({ handleAddCity }: Props) {
              shadow-lg z-10 backdrop-blur-sm transition-all duration-300 ease-out
              ${isFocused && results.length > 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"}`}
             >
-                {results.map((result) => (
-                    <div
-                        className="flex items-center justify-between hover:bg-gray-700 text-white cursor-pointer py-2 px-4"
+                {results.map((result) => {
+                    const alreadyExists = cities.some((city: CityData) => city.id === result.id);
+                    return (<div
+                        className={`flex items-center justify-between hover:bg-gray-700 text-white py-2 px-4 ${alreadyExists ? "cursor-not-allowed" : "cursor-pointer"}`}
                         key={result.id}
-                        onMouseDown={() => handleAddCityClick(result)}>
-                        <div className="text-white" >
+                        onMouseDown={() => {
+                            if (alreadyExists) return;
+                            handleAddCityClick(result);
+                        }}>
+                        <div className={` ${alreadyExists ? "text-gray-600" : "text-white"}`} >
                             <p className="font-bold">{result.name}</p>
-                            <p className="text-sm text-gray-400">{result.admin1}, {result.country}</p>
+                            <p className={`text-sm ${alreadyExists ? "text-gray-600" : "text-gray-400"}`}>{result.admin1}, {result.country}</p>
                         </div>
                         <div>
-                            <Plus className="text-sky-400 w-5 h-5" />
+                            <Plus className={`w-5 h-5 ${alreadyExists ? "text-gray-600" : "text-sky-400"}`} />
                         </div>
-                    </div>
-                ))}
+                    </div>)
+                })}
             </div>
         </div>
     );
