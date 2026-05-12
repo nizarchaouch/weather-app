@@ -9,6 +9,8 @@ type Props = {
 export default function SearchCity({ handleAddCity }: Props) {
     const [results, setResults] = useState<CityData[]>([]);
     const [query, setQuery] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
+
 
     const handelSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(e.target.value);
@@ -65,12 +67,22 @@ export default function SearchCity({ handleAddCity }: Props) {
                     type="text"
                     placeholder="Add a city..."
                     className="h-12 w-full rounded-full border border-gray-700 bg-[linear-gradient(135deg,_hsl(220_40%_14%_/_0.6)_0%,_hsl(220_40%_10%_/_0.4)_100%)] pl-10 pr-4 text-lg text-white/80 shadow-xl placeholder:text-white/50 focus:border-sky-400 focus:outline-none"
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
                 />
             </div>
 
-            {results.length > 0 && <div className="absolute mt-13 w-full max-w-md rounded-xl border border-gray-700 bg-[linear-gradient(135deg,_hsl(220_40%_14%_/_0.6)_0%,_hsl(220_40%_10%_/_0.4)_100%)] shadow-lg z-10 backdrop-blur-sm ">
+            <div
+                className={`absolute mt-13 w-full max-w-md rounded-xl border border-gray-700
+             bg-[linear-gradient(135deg,_hsl(220_40%_14%_/_0.6)_0%,_hsl(220_40%_10%_/_0.4)_100%)]
+             shadow-lg z-10 backdrop-blur-sm transition-all duration-300 ease-out
+             ${isFocused && results.length > 0 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2 pointer-events-none"}`}
+            >
                 {results.map((result) => (
-                    <div className="flex items-center justify-between hover:bg-gray-700 text-white cursor-pointer py-2 px-4" key={result.id} onClick={() => handleAddCityClick(result)}>
+                    <div
+                        className="flex items-center justify-between hover:bg-gray-700 text-white cursor-pointer py-2 px-4"
+                        key={result.id}
+                        onMouseDown={() => handleAddCityClick(result)}>
                         <div className="text-white" >
                             <p className="font-bold">{result.name}</p>
                             <p className="text-sm text-gray-400">{result.admin1}, {result.country}</p>
@@ -80,7 +92,7 @@ export default function SearchCity({ handleAddCity }: Props) {
                         </div>
                     </div>
                 ))}
-            </div>}
+            </div>
         </div>
     );
 }
