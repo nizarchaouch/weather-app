@@ -56,7 +56,7 @@ export default function SearchCity({ handleAddCity }: Props) {
 
 
     return (
-        <div className="flex flex-col items-center mb-8">
+        <div className="relative flex flex-col items-center mb-8">
             <div className="relative w-full max-w-md">
                 <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
@@ -68,7 +68,7 @@ export default function SearchCity({ handleAddCity }: Props) {
                 />
             </div>
 
-            {results.length > 0 && <div className="mt-1 w-full max-w-md rounded-xl border border-gray-700 bg-[linear-gradient(135deg,_hsl(220_40%_14%_/_0.6)_0%,_hsl(220_40%_10%_/_0.4)_100%)]">
+            {results.length > 0 && <div className="absolute mt-13 w-full max-w-md rounded-xl border border-gray-700 bg-[linear-gradient(135deg,_hsl(220_40%_14%_/_1)_0%,_hsl(220_40%_10%_/_0.7)_100%)]">
                 {results.map((result) => (
                     <div className="flex items-center justify-between hover:bg-gray-700 text-white cursor-pointer py-2 px-4" key={result.id} onClick={() => handleAddCityClick(result)}>
                         <div className="text-white" >
