@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@layer base {
+    :root {
+        --gradient-sky: linear-gradient(135deg, hsl(220 60% 8%) 0%, hsl(230 55% 14%) 50%, hsl(260 50% 18%) 100%);
+        --gradient-card: linear-gradient(135deg, hsl(220 40% 14% / 0.6) 0%, hsl(220 40% 10% / 0.4) 100%);
+        --gradient-primary: linear-gradient(135deg, hsl(199 89% 60%), hsl(280 80% 65%));
+        --gradient-sun: linear-gradient(135deg, hsl(42 100% 70%), hsl(20 100% 60%));
+        --gradient-rain: linear-gradient(135deg, hsl(210 80% 55%), hsl(220 60% 35%));
+    }
+}
+
 body {
     background: linear-gradient(135deg, hsl(220 60% 8%) 0%, hsl(230 55% 14%) 50%, hsl(260 50% 18%) 100%);
     background-attachment: fixed;
@@ -17,6 +27,10 @@ body {
     animation: float 4s ease-in-out infinite;
 }
 
+.animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+}
+
 @keyframes float {
 
     0%,
@@ -26,5 +40,11 @@ body {
 
     50% {
         transform: translateY(-8px);
+    }
+}
+
+@keyframes spin-slow {
+    to {
+        transform: rotate(360deg);
     }
 }
