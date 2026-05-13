@@ -1,21 +1,24 @@
-type current_weather_units = {
-  time: string;
+type current_units = {
+  apparent_temperature: string;
   interval: string;
-  temperature: string;
-  windspeed: string;
-  winddirection: string;
-  is_day: string;
-  weathercode: string;
-};
-
-type current_weather = {
+  is_day: string; 
+  relative_humidity_2m: string;
+  temperature_2m: string;
   time: string;
+  weather_code: string;
+  wind_direction_10m: string;
+  wind_speed_10m: string;
+};
+type current = {
+  apparent_temperature: number;
   interval: number;
-  temperature: number;
-  windspeed: number;
-  winddirection: number;
   is_day: number;
-  weathercode: number;
+  relative_humidity_2m: number;
+  temperature_2m: number;
+  time: string;
+  weather_code: number;
+  wind_direction_10m: number;
+  wind_speed_10m: number;
 };
 
 export type WeatherDataAPIResponse = {
@@ -26,6 +29,14 @@ export type WeatherDataAPIResponse = {
   timezone: string;
   timezone_abbreviation: string;
   elevation: number;
-  current_weather_units: current_weather_units;
-  current_weather: current_weather;
+  current_units: current_units;
+  current: current;
 };
+/* temperature: number;
+  apparent: number;
+  humidity: number;
+  wind: number;
+  windDir: number;
+  code: number;
+  isDay: boolean;
+  time: string; */
