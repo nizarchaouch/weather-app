@@ -12,24 +12,36 @@ type Props = {
 
 export default function WeatherCard({ city, handelDeltCity }: Props) {
     const [weather, setWeather] = useState<WeatherDataAPIResponse | null>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchWeather = async () => {
         try {
             const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m,wind_direction_10m&timezone=auto`);
+
+            if (!response.ok) {
+                if (response.status === 429) {
+                    throw new Error("Too many requests. Please wait a bit.");
+                }
+
+                throw new Error(`Weather request failed: ${response.status}`);
+            }
+
             const data: WeatherDataAPIResponse = await response.json();
             console.log("fetch weather data", city.name, data);
             setWeather(data);
+            setError(null);
         } catch (error) {
             console.error("Error fetching weather data:", error);
+            setError(error instanceof Error ? error.message : "Error fetching weather data");
         }
     }
 
     useEffect(() => {
         fetchWeather();
-    }, [city]);
+    }, [city.latitude, city.longitude, city.updatedAt]);
 
     return (
-        <div className="border border-gray-300 rounded-md p-4 mt-4" style={{
+        <div className="border border-gray-700 rounded-3xl p-4 mt-4" style={{
             backgroundImage: weather ? weatherGradient(weather.current.weather_code, !!weather.current.is_day) : undefined,
         }} >
             <div className="flex items-center justify-between ">
@@ -45,6 +57,7 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
             </div>
             <div>
                 <p className="text-sm">Wind: {weather ? Math.round(weather.current.wind_speed_10m) : "N/A"} {weather?.current_units.wind_speed_10m}</p>
+                {error && <p className="text-xs text-red-200">{error}</p>}
                 <p className="text-xs text-gray-500">Updated At: {city.updatedAt.toLocaleString()}</p>
             </div>
         </div>
