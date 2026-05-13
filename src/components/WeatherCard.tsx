@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type { WeatherDataAPIResponse } from "../types/weatherData";
 import type { CityData } from "../types/CityData";
-import { getWeatherCodeDesc } from "../utlis/getWeatherCodeDesc";
 import { WeatherIcon } from "../utlis/getWeatherCodeIcon";
 import { weatherGradient } from "../utlis/weatherGradient";
 import { MapPin, X } from "lucide-react";
