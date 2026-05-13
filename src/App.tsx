@@ -50,7 +50,7 @@ function App() {
     <div className="px-6 py-8">
       <Header refreshIn={refreshIn} />
       <SearchCity handleAddCity={handelAddCity} cities={cities} />
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 max-w-7xl mx-auto mt-6">
         {cities.map((city) => (
           <div key={city.id}>
             <WeatherCard city={city} handelDeltCity={handelDeltCity} />
