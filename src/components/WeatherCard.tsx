@@ -21,7 +21,7 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
 
             if (!response.ok) {
                 if (response.status === 429) {
-                    throw new Error("Too many requests. Please wait a bit.");
+                    throw new Error("Failed to load");
                 }
 
                 throw new Error(`Weather request failed: ${response.status}`);
@@ -58,11 +58,11 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
                         <X className="h-4 w-4" /></div>
                 </div>
                 {/* error message */}
-                {error && <p className="text-red text-sm">{error}</p>}
+                {error && <p className="text-red-500 text-sm">{error}</p>}
                 {/* weather information */}
                 <div className="flex items-center gap-4 mt-2 justify-between">
                     <div className="pl-2">
-                        <p className="text-5xl font-thin text-white">{weather ? Math.round(weather.current.apparent_temperature) : "N/A"}{weather?.current_units.apparent_temperature}</p>
+                        <p className="text-5xl font-thin text-white">{weather ? Math.round(weather.current.temperature_2m) : "N/A"}{weather?.current_units.temperature_2m}</p>
                         <p className="text-white/70 mt-1 text-">{describeWeather(weather?.current.weather_code ?? 0)}</p>
                     </div>
                     <p className={'text-white ' + (weather?.current.is_day && weather?.current.weather_code === 0 ? "animate-spin-slow" : "animate-float")}>{weather ? <WeatherIcon className="h-20 w-20" code={weather.current.weather_code} isDay={!!weather.current.is_day} /> : "N/A"}</p>
