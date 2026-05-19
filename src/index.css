@@ -7,17 +7,23 @@
         --gradient-primary: linear-gradient(135deg, hsl(199 89% 60%), hsl(280 80% 65%));
         --gradient-sun: linear-gradient(135deg, hsl(42 100% 70%), hsl(20 100% 60%));
         --gradient-rain: linear-gradient(135deg, hsl(210 80% 55%), hsl(220 60% 35%));
+        --background: 220 50% 6%;
+        --sky: 199 89% 60%;
+        --sun: 42 100% 65%;
+        --cloud: 215 25% 75%;
+        --rain: 210 80% 55%;
+        --night: 250 60% 30%;
     }
 }
 
 body {
-    background: linear-gradient(135deg, hsl(220 60% 8%) 0%, hsl(230 55% 14%) 50%, hsl(260 50% 18%) 100%);
+    background: var(--gradient-sky);
     background-attachment: fixed;
     min-height: 100vh;
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, hsl(199 89% 60%), hsl(280 80% 65%));
+    background: var(--gradient-primary);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
