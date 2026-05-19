@@ -8,7 +8,7 @@ import "./index.css";
 
 
 function App() {
-  const [refreshIn, setRefreshIn] = useState<number>(60);
+  const [refreshIn, setRefreshIn] = useState<number>(15);
   const [cities, setCities] = useState<CityData[]>([]);
 
   const handelAddCity = (city: CityData) => {
@@ -37,7 +37,7 @@ function App() {
             }))
           );
 
-          return 60;
+          return 15;
         }
         return prev - 1;
       });
