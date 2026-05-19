@@ -46,7 +46,7 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
             backgroundImage: weather ? weatherGradient(weather.current.weather_code, !!weather.current.is_day) : undefined,
         }} >
             <div className="absolute z-0 inset-0 bg-[hsl(var(--background))]/40 rounded-3xl" />
-            <div className="relative z-10">
+            <div className="relative z-1">
                 {/* city information */}
                 <div className="flex items-center justify-between">
                     <div>
@@ -58,7 +58,7 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
                         <X className="h-4 w-4" /></div>
                 </div>
                 {/* error message */}
-                {error && <p className="text-destructive text-sm">{error}</p>}
+                {error && <p className="text-red text-sm">{error}</p>}
                 {/* weather information */}
                 <div className="flex items-center gap-4 mt-2 justify-between">
                     <div className="pl-2">
@@ -72,6 +72,14 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
                     <Stat icon={<Thermometer className="h-3.5 w-3.5" />} label="Feels" value={`${Math.round(weather?.current.apparent_temperature ?? 0)}°`} />
                     <Stat icon={<Droplets className="h-3.5 w-3.5" />} label="Humidity" value={`${weather?.current.relative_humidity_2m}%`} />
                     <Stat icon={<Wind className="h-3.5 w-3.5" />} label="Wind" value={`${Math.round(weather?.current.wind_speed_10m ?? 0)} ${weather?.current_units.wind_speed_10m}`} />
+                </div>
+
+                <div className="flex items-center gap-1 text-white/70 text-xs mt-5 mb-2 ps-2">
+                    <span className="relative flex size-2">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                        <span className="relative inline-flex size-2 rounded-full bg-sky-500"></span>
+                    </span>
+                    <p className="text-sm ms-1">Live · refreshing in 15s</p>
                 </div>
             </div>
 
