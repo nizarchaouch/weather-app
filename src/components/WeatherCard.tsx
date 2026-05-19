@@ -42,18 +42,24 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
     }, [city.latitude, city.longitude, city.updatedAt]);
 
     return (
-        <div className="relative border border-gray-700 rounded-3xl p-4 mt-4" style={{
+        <div className="relative border border-gray-700 rounded-3xl p-4 mt-4 group" style={{
             backgroundImage: weather ? weatherGradient(weather.current.weather_code, !!weather.current.is_day) : undefined,
         }} >
             <div className="absolute z-0 inset-0 bg-[hsl(var(--background))]/40 rounded-3xl" />
             <div className="relative z-10">
+                {/* city information */}
                 <div className="flex items-center justify-between">
                     <div>
                         <span className="text-white/70 text-sm font-medium flex items-center gap-1"> <MapPin className="h-3.5 w-3.5" /> {city.country}</span>
                         <h1 className="text-white font-bold text-2xl pl-1">{city.name}</h1>
                     </div>
-                    <div onClick={() => handelDeltCity(city.id)} className="cursor-pointer hover:bg-gray-200 rounded"> <X className="h-4 w-4" /></div>
+                    {/* delete city button */}
+                    <div onClick={() => handelDeltCity(city.id)} className="absolute top-0 right-0 opacity-0 text-white group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-purple-400 rounded-full p-1">
+                        <X className="h-4 w-4" /></div>
                 </div>
+                {/* error message */}
+                {error && <p className="text-destructive text-sm">{error}</p>}
+                {/* weather information */}
                 <div className="flex items-center gap-4 mt-2 justify-between">
                     <div className="pl-2">
                         <p className="text-5xl font-thin text-white">{weather ? Math.round(weather.current.apparent_temperature) : "N/A"}{weather?.current_units.apparent_temperature}</p>
@@ -61,6 +67,7 @@ export default function WeatherCard({ city, handelDeltCity }: Props) {
                     </div>
                     <p className={'text-white ' + (weather?.current.is_day && weather?.current.weather_code === 0 ? "animate-spin-slow" : "animate-float")}>{weather ? <WeatherIcon className="h-20 w-20" code={weather.current.weather_code} isDay={!!weather.current.is_day} /> : "N/A"}</p>
                 </div>
+                {/* weather stats */}
                 <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-gray-800">
                     <Stat icon={<Thermometer className="h-3.5 w-3.5" />} label="Feels" value={`${Math.round(weather?.current.apparent_temperature ?? 0)}°`} />
                     <Stat icon={<Droplets className="h-3.5 w-3.5" />} label="Humidity" value={`${weather?.current.relative_humidity_2m}%`} />
